@@ -5,6 +5,7 @@
 
 package it.unipd.mtss.business;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import it.unipd.mtss.business.exception.BillException;
@@ -34,6 +35,9 @@ public class BillImplementation implements Bill {
         if(processList == null || processList.size() == 0){
             return 0.0;
         }
+        if (processList.size() > 5){
+            processList.stream().min(Comparator.comparing((EItem x) -> x.getPrice())).get().discount(0.5);
+        }
         return processList.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
     }
 
@@ -57,4 +61,5 @@ public class BillImplementation implements Bill {
         }
         return motherboardlist.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
     }
+
 }

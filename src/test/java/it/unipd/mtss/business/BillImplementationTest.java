@@ -49,4 +49,12 @@ public class BillImplementationTest extends TestCase {
     public void testEmptyOrder() throws BillException {
         assertEquals(0.0, bill.getOrderPrice(itemsOrdered, user));
     }
+    @org.junit.Test
+    public void testProcDiscount() throws BillException{
+        for (int i=0;i<5;i++){
+            itemsOrdered.add(new EItem(itemType.PROCESSORI, 150, "I3"));
+        }
+        itemsOrdered.add(new EItem(itemType.PROCESSORI, 70, "Intel Celeron"));
+        assertEquals(785.0, bill.getOrderPrice(itemsOrdered, user));
+    }
 }

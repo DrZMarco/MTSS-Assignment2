@@ -84,4 +84,15 @@ public class BillImplementationTest extends TestCase {
         itemsOrdered.add(new EItem(itemType.MOTHERBOARD, 150, "MSI Z390"));
         assertEquals(1066.5, bill.getOrderPrice(itemsOrdered, user));
     }
+    @org.junit.Test
+    public void testTooManyItems() {
+        for(int i=0; i<31; i++) {
+            itemsOrdered.add(new EItem(itemType.PROCESSORI, 200, "Intel I5 7600K"));
+        }
+        try {
+            bill.getOrderPrice(itemsOrdered, user);
+        } catch(BillException e) {
+            assertEquals("Ordine superiore a 30pz", e.getMessage());
+        }
+    }
 }

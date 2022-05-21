@@ -73,4 +73,15 @@ public class BillImplementationTest extends TestCase {
             itemsOrdered.add(new EItem(itemType.TASTIERE, 35, "Tastiera logitech"));
         }
     }
+    @org.junit.Test
+    public void testBigOrder() throws BillException{
+        for (int i=0;i<10;i++){
+            itemsOrdered.add(new EItem(itemType.MOUSE, 15, "Mouse logitech"));
+            itemsOrdered.add(new EItem(itemType.TASTIERE, 35, "Tastiera logitech"));
+        }
+        itemsOrdered.add(new EItem(itemType.PROCESSORI, 200, "Intel I5 7600K"));
+        itemsOrdered.add(new EItem(itemType.PROCESSORI, 350, "Intel I7 10700"));
+        itemsOrdered.add(new EItem(itemType.MOTHERBOARD, 150, "MSI Z390"));
+        assertEquals(1066.5, bill.getOrderPrice(itemsOrdered, user));
+    }
 }

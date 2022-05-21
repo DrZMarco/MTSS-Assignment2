@@ -52,6 +52,9 @@ public class BillImplementation implements Bill {
         if(mouselist == null || mouselist.size() == 0){
             return 0.0;
         }
+        if(mouselist.size() > 10){
+            mouselist.stream().min(Comparator.comparing((EItem x) -> x.getPrice())).get().discount(1.0);
+        }        
         return mouselist.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
     }
 

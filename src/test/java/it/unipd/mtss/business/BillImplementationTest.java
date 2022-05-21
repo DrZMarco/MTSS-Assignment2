@@ -57,4 +57,13 @@ public class BillImplementationTest extends TestCase {
         itemsOrdered.add(new EItem(itemType.PROCESSORI, 70, "Intel Celeron"));
         assertEquals(785.0, bill.getOrderPrice(itemsOrdered, user));
     }
+    @org.junit.Test
+    public void testMouseDiscount() throws BillException{
+        for (int i=0;i<10;i++){
+            itemsOrdered.add(new EItem(itemType.MOUSE, 15, "Mouse logitech"));
+        }
+        itemsOrdered.add(new EItem(itemType.MOUSE, 50, "Corsair Mouse"));
+        itemsOrdered.add(new EItem(itemType.MOUSE, 5, "Aliexpress Mouse"));
+        assertEquals(200.0, bill.getOrderPrice(itemsOrdered, user));
+    }
 }

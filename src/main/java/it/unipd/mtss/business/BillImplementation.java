@@ -26,8 +26,7 @@ public class BillImplementation implements Bill {
             }
         }
         return getProcessorPrice(map.get(EItem.itemType.PROCESSORI)) +
-                getKeyboardPrice(map.get(EItem.itemType.TASTIERE)) +
-                getMousePrice(map.get(EItem.itemType.MOUSE)) +
+                getPerifPrice(map.get(EItem.itemType.MOUSE), map.get(EItem.itemType.TASTIERE))+
                 getMotherboardPrice(map.get(EItem.itemType.MOTHERBOARD));
     }
 
@@ -40,24 +39,24 @@ public class BillImplementation implements Bill {
         }
         return processList.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
     }
-
-    double getKeyboardPrice(List<EItem> keyboardlist){
-        if(keyboardlist == null || keyboardlist.size() == 0){
-            return 0.0;
+    double getPerifPrice(List<EItem> mouseList, List<EItem> keyboardList){
+        ArrayList<EItem> Perif = new ArrayList<EItem>();
+        if (mouseList != null){
+            if (mouseList.size() > 10){
+                mouseList.stream().min(Comparator.comparing((EItem x) -> x.getPrice())).get().discount(1.0);
+                Perif.addAll(mouseList);
+            } else{
+                Perif.addAll(mouseList);
+            }
         }
-        return keyboardlist.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
-    }
-
-    double getMousePrice(List<EItem> mouselist){
-        if(mouselist == null || mouselist.size() == 0){
-            return 0.0;
+        if (keyboardList != null){
+            Perif.addAll(keyboardList);
+            if (mouseList.size() == keyboardList.size() && mouseList.size() != 0){
+                Perif.stream().min(Comparator.comparing((EItem x) -> x.getPrice())).get().discount(1.0);
+            }
         }
-        if(mouselist.size() > 10){
-            mouselist.stream().min(Comparator.comparing((EItem x) -> x.getPrice())).get().discount(1.0);
-        }        
-        return mouselist.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
+        return Perif.stream().map((x) -> x.getPrice()).reduce(0.0, (a,b) -> a+b);
     }
-
     double getMotherboardPrice(List<EItem> motherboardlist){
         if(motherboardlist == null || motherboardlist.size() == 0){
             return 0.0;

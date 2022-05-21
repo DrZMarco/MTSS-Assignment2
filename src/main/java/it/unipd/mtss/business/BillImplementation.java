@@ -31,7 +31,7 @@ public class BillImplementation implements Bill {
         double total = getProcessorPrice(map.get(EItem.itemType.PROCESSORI)) +
                 getPerifPrice(map.get(EItem.itemType.MOUSE), map.get(EItem.itemType.TASTIERE))+
                 getMotherboardPrice(map.get(EItem.itemType.MOTHERBOARD));
-        return total > 1000.0 ? total * 0.9 : total;
+        return total > 1000.0 ? total * 0.9 : total < 10.0 && total != 0.0 ? total + 2 : total;
     }
 
     double getProcessorPrice(List<EItem> processList){

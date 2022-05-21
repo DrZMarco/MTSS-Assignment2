@@ -95,4 +95,9 @@ public class BillImplementationTest extends TestCase {
             assertEquals("Ordine superiore a 30pz", e.getMessage());
         }
     }
+    @org.junit.Test
+    public void testLowAmountOrder() throws BillException {
+        itemsOrdered.add(new EItem(itemType.MOUSE, 7, "Wish Mouse"));
+        assertEquals(9.0, bill.getOrderPrice(itemsOrdered, user));
+    }
 }
